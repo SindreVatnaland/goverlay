@@ -4,12 +4,15 @@ import { loadNativeLib } from "../utils/loadoverlay";
 
 class Application {
   private windows: Map<string, Electron.BrowserWindow>;
+  private markQuit = false;
+
   private Overlay;
 
   constructor() {
     this.windows = new Map();
     this.Overlay = loadNativeLib()
   }
+
 
   public startOverlay() {
     this.Overlay!.start();
@@ -46,6 +49,9 @@ class Application {
     window.webContents.on(
       "paint",
       (_, __, image: Electron.NativeImage) => {
+        if (this.markQuit) {
+          return;
+        }
         this.Overlay!.sendFrameBuffer(
           window.id,
           image.getBitmap(),
