@@ -9,7 +9,7 @@
         "build": "npm run build:main && npm run build:renderer",
         "build:addon:x86": "(cmake-js -G \"Visual Studio 17 2022\" -A Win32 -O build_Win32)",
         "build:addon:x64": "(cmake-js -G \"Visual Studio 17 2022\" -A x64 -O build_x64)",
-        "start": "electron . --enable-logging",
+        "start": "npm run build && electron . --enable-logging",
         "copy_binary": "copy_binary.bat"
     },
     "devDependencies": {

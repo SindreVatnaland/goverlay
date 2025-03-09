@@ -17,7 +17,3 @@ ElectronApp.on("window-all-closed", () => {
         ElectronApp.quit()
     }
 })
-
-ElectronApp.on("activate", () => {
-    appEntry.activate()
-})
