@@ -11,7 +11,6 @@ class Application {
     this.Overlay = loadNativeLib()
   }
 
-
   public startOverlay() {
     this.Overlay!.start();
 
@@ -24,22 +23,17 @@ class Application {
     name: string,
     window: Electron.BrowserWindow,
   ) {
-    const display = screen.getDisplayNearestPoint(
-      screen.getCursorScreenPoint()
-    );
+    const width = window.getBounds().width;
+    const height = window.getBounds().height;
 
     this.Overlay!.addWindow(window.id, {
       name,
       transparent: true,
-      resizable: window.isResizable(),
-      maxWidth: window.isResizable
-        ? display.bounds.width
-        : window.getBounds().width,
-      maxHeight: window.isResizable
-        ? display.bounds.height
-        : window.getBounds().height,
-      minWidth: window.isResizable ? 100 : window.getBounds().width,
-      minHeight: window.isResizable ? 100 : window.getBounds().height,
+      resizable: false,
+      maxWidth: width,
+      maxHeight: height,
+      minWidth: width,
+      minHeight: height,
       nativeHandle: window.getNativeWindowHandle().readUInt32LE(0),
       rect: {
         x: window.getBounds().x,
@@ -114,9 +108,9 @@ class Application {
 
       this.createInjectedWindow();
       
-      const arg = "D9G"
+      const windowName = "D9G"
       for (const window of this.Overlay.getTopWindows()) {
-        if (window.title.indexOf(arg) !== -1) {
+        if (window.title.indexOf(windowName) !== -1) {
           console.log(`--------------------\n injecting ${JSON.stringify(window)}`);
           const result = this.Overlay.injectProcess(window);
           console.log(`injectProcess result: ${result}`);
