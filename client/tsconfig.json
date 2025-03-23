@@ -6,6 +6,7 @@
     /* Specify library files to be included in the compilation. */
     // "jsx": "preserve",
     "allowJs": true,
+    "skipLibCheck": true,
 
     "sourceMap": true,
     "outDir": "./dist/main",
